@@ -27,6 +27,18 @@ public class Calcolatrice
 		}
 	}
 	
+	private class EvaluateResult{
+		Double result;
+		Stack<CalcuatorElement> remaingElements;
+		
+		public EvaluateResult(Double result, Stack<CalcuatorElement> remaingElements) {
+			this.result = result;
+			this.remaingElements = remaingElements;
+			System.out.println(result);
+		}
+		
+	}
+	
 	private Stack<CalcuatorElement>dati= new Stack<>();
 	private HashMap<String,CalcuatorElement> knownOperator=new HashMap<>();
 
@@ -56,16 +68,7 @@ public class Calcolatrice
 		
 		return evaluate();
 	}
-	private class EvaluateResult{
-		Double result;
-		Stack<CalcuatorElement> remaingElements;
-		
-		public EvaluateResult(Double result, Stack<CalcuatorElement> remaingElements) {
-			this.result = result;
-			this.remaingElements = remaingElements;
-		}
-		
-	}
+	
 	private EvaluateResult evaluate(Stack<CalcuatorElement> opStack)
 	{
 		if(opStack.isEmpty())
@@ -74,6 +77,7 @@ public class Calcolatrice
 		Stack<CalcuatorElement> wStack=(Stack<CalcuatorElement>) opStack.clone();
 		
 		CalcuatorElement op=wStack.pop();
+
 		if(!op.isOperator)
 		{
 			return new EvaluateResult(op.value,wStack);
@@ -84,15 +88,17 @@ public class Calcolatrice
 				return new EvaluateResult(((UnaryOperator)op.operator).eval(opEval.result),opEval.remaingElements);
 		}else if(op.operator instanceof BinaryOperator)
 		{
-			//to do
+			EvaluateResult opEval1= evaluate(wStack);
+			wStack.pop();
+			EvaluateResult opEval2= evaluate(wStack);
+			if(opEval1!=null && opEval2!=null)
+				return new EvaluateResult(((BinaryOperator)op.operator).eval(opEval1.result,opEval2.result),opEval2.remaingElements);
 		}
 		return null;
 	}
 	private Double evaluate()
-	{
-		
-		return evaluate(
-				(((Stack<CalcuatorElement>)dati.clone()).result;
+	{	
+		return evaluate((Stack<CalcuatorElement>)dati.clone()).result;
 	}
 	public Double performOperation(String op)
 	{
@@ -106,9 +112,7 @@ public class Calcolatrice
 		default:
 			if(knownOperator.containsKey(op))
 				dati.push(knownOperator.get(op));
-		}
-		//calcoli
-		
+		}		
 		return dati.size()>0 ? evaluate(): 0.;
 	}
 }
