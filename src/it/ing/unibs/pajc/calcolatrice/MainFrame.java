@@ -4,6 +4,9 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import it.ing.unibs.pajc.calcolatrice.model.Calcolatrice;
+
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import javax.swing.JButton;
