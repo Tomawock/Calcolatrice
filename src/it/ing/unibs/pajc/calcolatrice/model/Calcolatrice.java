@@ -89,12 +89,19 @@ public class Calcolatrice
 		}else if(op.operator instanceof BinaryOperator)
 		{
 			EvaluateResult opEval1= evaluate(wStack);
-			wStack.pop();
+			/*wStack.pop();
 			EvaluateResult opEval2= evaluate(wStack);
-			if(opEval1!=null && opEval2!=null)
-				return new EvaluateResult(((BinaryOperator)op.operator).eval(opEval1.result,opEval2.result),opEval2.remaingElements);
+			if(opEval1!=null && opEval2!=null)*/
+			if(opEval1!=null)
+			{
+				EvaluateResult opEval2= evaluate(opEval1.remaingElements);
+				if(opEval2!=null)
+				{
+					return new EvaluateResult(((BinaryOperator)op.operator).eval(opEval1.result,opEval2.result),opEval2.remaingElements);
+				}
+			}	
 		}
-		return null;
+		return new EvaluateResult(null, opStack);
 	}
 	private Double evaluate()
 	{	
