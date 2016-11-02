@@ -4,6 +4,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.event.ChangeEvent;
 
 import it.ing.unibs.pajc.calcolatrice.model.Calcolatrice;
 
@@ -20,7 +21,8 @@ import java.awt.GridBagLayout;
 public class MainFrame {
 
 	private JFrame frame;
-	private Calcolatrice calc;
+	private Calcolatrice brain;
+	private PanOperators panOperators;
 
 	/**
 	 * Launch the application.
@@ -42,8 +44,16 @@ public class MainFrame {
 	 * Create the application.
 	 */
 	public MainFrame() {
-		calc=new Calcolatrice();
+		brain=new Calcolatrice();
 		initialize();
+		brain.addKnownOperator("^",(a)->a*a);
+		refreshOperators(null);
+	}
+	void refreshOperators(ChangeEvent e)
+	{
+		/*panOperators.removeAllButtons();
+		for(String s:brain.getKnow)
+		*/
 	}
 
 	/**
@@ -67,7 +77,7 @@ public class MainFrame {
 		panKeyPad.setBounds(45, 23, 161, 201);
 		panel.add(panKeyPad);
 		
-		PanOperators panOperators = new PanOperators();
+		panOperators = new PanOperators();
 		panOperators.setBounds(229, 23, 54, 201);
 		panel.add(panOperators);
 		

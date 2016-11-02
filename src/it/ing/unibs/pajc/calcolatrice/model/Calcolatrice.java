@@ -3,7 +3,7 @@ package it.ing.unibs.pajc.calcolatrice.model;
 import java.util.HashMap;
 import java.util.Stack;
 
-public class Calcolatrice 
+public class Calcolatrice extends BaseModel
 {	
 	private class CalcuatorElement {
 		
@@ -51,13 +51,13 @@ public class Calcolatrice
 		addKnownOperator("sqrt", Math::sqrt);//lamda expression con un singolo valore ::7
 	}
 	
-	void addKnownOperator(String name,BinaryOperator op)
+	public void addKnownOperator(String name,BinaryOperator op)
 	{
 		knownOperator.put(name, new CalcuatorElement(name,op));
 		
 	}
 	
-	void addKnownOperator(String name,UnaryOperator op)
+	public void addKnownOperator(String name,UnaryOperator op)
 	{
 		knownOperator.put(name, new CalcuatorElement(name,op));
 	}
